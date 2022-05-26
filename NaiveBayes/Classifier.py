@@ -1,3 +1,4 @@
+from cgi import test
 import numpy as np
 import pandas as pd
 from sklearn import datasets
@@ -142,15 +143,23 @@ def accuracy_metric(actual, predicted):
     return correct / float(len(actual)) * 100.0
 
 
+def test_file(filename):
+    test_set = pd.read_csv(filename)
+    query = np.array(test_set.values.tolist())
+    print("{}".format(c.predict(query)))
+
+
 filename = 'weather_header.csv'
 
-n_folds = 5
+n_folds = 10
 c = Classificator()
 
 scores = evaluate_algorithm(c, n_folds, filename)
 
 print('Scores: %s' % scores)
 print('Mean Accuracy: %.3f%%' % (sum(scores)/float(len(scores))))
+
+test_file('bayes_testset.csv')
 
 print('Enter values divided by commas:')
 while True:
